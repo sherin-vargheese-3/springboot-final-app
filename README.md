@@ -5,4 +5,4 @@ A simple application that include kafka, redis, postgres, docker, elasticsearch,
 
 ## Project structure
 
-*   **[com.exercise.demo](src/main/java/com/exercise/finalapplication)**: The main application package.
+*   **[com.exercise.demo](src/main/java/com/exercise/demo)**: The main application package.
