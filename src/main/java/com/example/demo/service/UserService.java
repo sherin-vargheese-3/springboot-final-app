@@ -2,6 +2,7 @@ package com.example.demo.service;
 
 import com.example.demo.contract.UserDTO;
 import com.example.demo.elasticsearch.service.UserSearchService;
+import com.example.demo.exception.UserNotFoundException;
 import com.example.demo.mapper.UserMapper;
 import com.example.demo.model.User;
 import com.example.demo.repository.UserRepository;
@@ -43,7 +44,7 @@ public class UserService {
         }
 
         User user = userRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("User not found"));
+                .orElseThrow(() -> new UserNotFoundException(id));
 
         UserDTO dto = userMapper.toDTO(user); // Using mapper
         valueOps.set(key, dto, 30, TimeUnit.MINUTES);
@@ -78,12 +79,16 @@ public class UserService {
     @CacheEvict(value = {"users", "allUsers"}, allEntries = true)
     public UserDTO updateUser(Long id, UserDTO userDTO) {
         User existingUser = userRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("User not found."));
+                .orElseThrow(() -> new UserNotFoundException(id));
 
-        existingUser.setName(userDTO.getName());
-        existingUser.setEmail(userDTO.getEmail());
-        existingUser.setAge(userDTO.getAge());
-        User updated = userRepository.save(existingUser);
+        User updated = User.builder()
+                .id(existingUser.getId())
+                .name(userDTO.getName())
+                .email(userDTO.getEmail())
+                .age(userDTO.getAge())
+                .build();
+
+        userRepository.save(updated);
 
         messageService.processUserMessage("User '" + updated.getName() + "' updated.");
 
@@ -101,7 +106,7 @@ public class UserService {
             // Delete from Elasticsearch
             userSearchService.deleteUser(id);
         } else {
-            throw new RuntimeException("User not found.");
+            throw new UserNotFoundException(id);
         }
     }
 
