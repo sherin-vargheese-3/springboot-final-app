@@ -1,0 +1,15 @@
+meta {
+  name: search
+  type: http
+  seq: 5
+}
+
+get {
+  url: http://127.0.0.1:52960/api/users/search?keyword=sherin
+  body: none
+  auth: inherit
+}
+
+params:query {
+  keyword: sherin
+}

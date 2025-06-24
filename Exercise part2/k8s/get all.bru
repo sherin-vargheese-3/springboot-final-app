@@ -1,0 +1,18 @@
+meta {
+  name: get all
+  type: http
+  seq: 1
+}
+
+get {
+  url: http://127.0.0.1:52960/api/users
+  body: json
+  auth: inherit
+}
+
+body:json {
+  {
+    "name": "sherin",
+    "email": "sherin@example.com"
+  }
+}
