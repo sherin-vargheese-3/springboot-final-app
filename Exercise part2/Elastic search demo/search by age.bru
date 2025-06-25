@@ -1,0 +1,17 @@
+meta {
+  name: search by age
+  type: http
+  seq: 2
+}
+
+get {
+  url: http://localhost:8080/api/users/search/age?age=20&page=0&size=5
+  body: none
+  auth: inherit
+}
+
+params:query {
+  age: 20
+  page: 0
+  size: 5
+}

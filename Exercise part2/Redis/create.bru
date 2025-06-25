@@ -1,11 +1,11 @@
 meta {
   name: create
   type: http
-  seq: 6
+  seq: 4
 }
 
 post {
-  url: http://127.0.0.1:57144/api/users
+  url: http://localhost:8080/api/users
   body: json
   auth: inherit
 }
@@ -14,6 +14,6 @@ body:json {
   {
     "name": "joyal",
     "email": "joyal@example.com",
-    "age": 30
+    "age": 20
   }
 }
