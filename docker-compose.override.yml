@@ -26,3 +26,4 @@ services:
             SPRING_ELASTICSEARCH_URIS: http://elasticsearch:9200
             # Profile
             SPRING_PROFILES_ACTIVE: docker
+        restart: unless-stopped
